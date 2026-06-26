@@ -1,81 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Llamar ahora</title>
+<title>Call now</title>
 <style>
-  :root { --brand:#1D9E75; --ink:#1a1a1a; --muted:#666; --bg:#f7f7f5; }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-         background:var(--bg); color:var(--ink); min-height:100vh;
-         display:flex; align-items:center; justify-content:center; padding:24px; }
-  .card { background:#fff; border-radius:20px; padding:36px 28px; max-width:380px;
-          width:100%; text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.06); }
-  h1 { font-size:22px; font-weight:600; margin-bottom:8px; }
-  .partner { color:var(--brand); }
-  p { color:var(--muted); font-size:15px; line-height:1.5; margin-bottom:28px; }
-  .call-btn { display:flex; align-items:center; justify-content:center; gap:10px;
-              background:var(--brand); color:#fff; text-decoration:none;
-              font-size:18px; font-weight:600; padding:18px; border-radius:14px;
-              transition:transform .1s, background .2s; }
-  .call-btn:active { transform:scale(.98); background:#17855f; }
-  .num { font-size:13px; color:var(--muted); margin-top:18px; }
-  svg { width:22px; height:22px; }
+:root { --brand:#1D9E75; --ink:#1a1a1a; --muted:#666; --bg:#f7f7f5; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+        background:var(--bg); color:var(--ink); min-height:100vh;
+        display:flex; align-items:center; justify-content:center; padding:24px; }
+.card { background:#fff; border-radius:20px; padding:36px 28px; max-width:380px;
+        width:100%; text-align:center; box-shadow:0 4px 24px rgba(0,0,0,.06); }
+h1 { font-size:22px; font-weight:600; margin-bottom:8px; }
+.partner { color:var(--brand); }
+p { color:var(--muted); font-size:15px; line-height:1.5; margin-bottom:28px; }
+.call-btn { display:flex; align-items:center; justify-content:center; gap:10px;
+            background:var(--brand); color:#fff; text-decoration:none;
+            font-size:18px; font-weight:600; padding:18px; border-radius:14px;
+            transition:transform .1s, background .2s; }
+.call-btn:active { transform:scale(.98); background:#17855f; }
+.num { font-size:13px; color:var(--muted); margin-top:18px; }
+svg { width:22px; height:22px; }
 </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Habla con el asistente de <span class="partner" id="partnerName">nuestro equipo</span></h1>
-    <p>Toca el botón para llamar gratis y resolver tu deuda en minutos.</p>
+<div class="card">
+  <h1>Talk to the assistant of <span class="partner" id="partnerName">our team</span></h1>
+  <p>Tap the button to call for free and resolve your debt in minutes.</p>
 
-    <a class="call-btn" id="callBtn" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-      Llamar ahora
-    </a>
+  <a class="call-btn" id="callBtn" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </svg>
+    Call now
+  </a>
 
-    <div class="num" id="numDisplay"></div>
-  </div>
+  <div class="num" id="numDisplay"></div>
+</div>
 
 <script>
-  // ====== CONFIGURA AQUÍ ======
-  const TWILIO_NUMBER = "+15755776848";   // tu número único de siempre
-  const CLICK_WEBHOOK = "";                // (opcional) URL de Supabase/n8n para loggear el click
-  // ============================
+// ====== CONFIGURE HERE ======
+const TWILIO_NUMBER = "+15755776848"; // your unique number
+const CLICK_WEBHOOK = ""; // (optional) Supabase/n8n URL to log the click
+// ============================
 
-  const params   = new URLSearchParams(window.location.search);
-  const partner  = params.get("partner") || "";   // ej: Juanito
-  const code      = params.get("code")   || "";    // ej: 001  (NUMÉRICO para DTMF)
+const params = new URLSearchParams(window.location.search);
+const partner = params.get("partner") || ""; // e.g.: Juanito
+const code = params.get("code") || ""; // e.g.: 001 (NUMERIC for DTMF)
 
-  // Mostrar nombre del influencer
-  if (partner) document.getElementById("partnerName").textContent = partner;
+// Show influencer name
+if (partner) document.getElementById("partnerName").textContent = partner;
 
-  // Construir el tel: link con DTMF post-dial (envía el code como tonos)
-  // Formato: tel:+1XXXXXXXXXX,,CODE  -> 2 comas = pausa, luego los dígitos
-  const digitsOnly = code.replace(/\D/g, "");      // DTMF solo acepta números
-  const telHref = digitsOnly
-    ? `tel:${TWILIO_NUMBER},,${digitsOnly}`
-    : `tel:${TWILIO_NUMBER}`;
+// Build the tel: link with post-dial DTMF (sends the code as tones)
+// Format: tel:+1XXXXXXXXXX,,CODE -> 2 commas = pause, then the digits
+const digitsOnly = code.replace(/\D/g, ""); // DTMF only accepts numbers
+const telHref = digitsOnly
+  ? `tel:${TWILIO_NUMBER},,${digitsOnly}`
+  : `tel:${TWILIO_NUMBER}`;
 
-  const btn = document.getElementById("callBtn");
-  btn.href = telHref;
+const btn = document.getElementById("callBtn");
+btn.href = telHref;
 
-  const pretty = TWILIO_NUMBER.replace(/(\+1)(\d{3})(\d{3})(\d{4})/, "$1 ($2) $3-$4");
-  document.getElementById("numDisplay").textContent = pretty;
-
-  // Loggear el click ANTES de marcar (atribución de respaldo por tiempo)
-  btn.addEventListener("click", () => {
-    if (!CLICK_WEBHOOK) return;
-    const payload = JSON.stringify({
-      partner, code,
-      ts: new Date().toISOString(),
-      ua: navigator.userAgent
-    });
-    // sendBeacon no bloquea la navegación a tel:
-    navigator.sendBeacon(CLICK_WEBHOOK, payload);
-  });
+const pretty = TWILIO_NUMBER.replace(/(\+1)(\d{3})(\d{3})(\d{4})/, "$1 ($2) $3-$4");
+document.getElementById("numDisplay").textContent = pretty;
 </script>
 </body>
 </html>
